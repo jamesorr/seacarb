@@ -15,4 +15,3 @@ function(S=35,T=25){
 	attr(amp,"unit") <- "mol/kg"
 	return(amp)
 }
-# tmp
