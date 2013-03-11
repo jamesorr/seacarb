@@ -4,7 +4,7 @@ Version: 2.4.9
 Date: 2013-03-11  
 LazyData: yes
 Author: Heloise Lavigne, Jean-Pierre Gattuso
-Description: Calculates parameters of the seawater carbonate system.
+Description: Calculates parameters of the seawater carbonate system and assists the design of ocean acidification perturbation experiments.
         Code and/or corrections were contributed by Andreas Andersson,
         Jean-Marie Epitalon, Bernard Gentili, Andreas Hofmann, Jim Orr,
         Aurelien Proye and Karline Soetaert and James Rae

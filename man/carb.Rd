@@ -69,7 +69,7 @@ flag = 25     pCO2 and DIC given
 
 \emph{For K1 and K2:}
 \itemize{
-\item Roy et al. (1993): S ranging between 0 and 45 and T ranging between 0 and 45oC.
+\item Roy et al. (1993): S ranging between 5 and 45 and T ranging between 0 and 45oC.
 
 \item Lueker et al. (2000): S ranging between 19 and 43 and T ranging between 2 and 35oC.
 
