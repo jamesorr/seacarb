@@ -1,6 +1,10 @@
 -----------------------------------
+version 2.4.9, 2013-03-11
+- Replaced Kh by K0, the right symbol for the solubility of carbon dioxide in sea water
+-
+-----------------------------------
 version 2.4.8, 2013-02-22
-The previousverion 2.4.7 was rejected by CRAN. This version is an attempt to fix two issues. There are no bug fix nor new capabilities.
+The previous version 2.4.7 was rejected by CRAN. This version is an attempt to fix two issues. There are no bug fix nor new capabilities.
 
 -----------------------------------
 version 2.4.7, 2013-01-18 [not distributed through CRAN which rejected it]

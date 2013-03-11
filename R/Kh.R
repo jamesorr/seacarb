@@ -9,7 +9,7 @@
 # You should have received a copy of the GNU General Public License along with seacarb; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 #
-"Kh" <-
+"K0" <-
 function(S=35,T=25,P=0){
 
 nK <- max(length(S), length(T), length(P))
@@ -28,10 +28,10 @@ TC = T + tk;           # TC [C]; T[K]
 
 
 	#---------------------------------------------------------------------
-	#---------------------- Kh (K Henry) ---------------------------------
+	#---------------------- K0 (K Henry) ---------------------------------
 	#
 	#               CO2(g) <-> CO2(aq.)
-	#               Kh      = [CO2]/ p CO2
+	#               K0      = [CO2]/ p CO2
 	#
 	#   Weiss (1974)   [mol/kg/atm]
 	#
@@ -43,10 +43,10 @@ TC = T + tk;           # TC [C]; T[K]
 ##------------Warnings
 
 for(i in 1:nK){
-if((T[i]>45)|(S[i]>45)|(T[i]<(-1))){warning("S and/or T is outside the range of validity of the formulation available for Kh in seacarb.")}
+if((T[i]>45)|(S[i]>45)|(T[i]<(-1))){warning("S and/or T is outside the range of validity of the formulation available for K0 in seacarb.")}
 }	
 
-	Kh= exp(nKhwe74);
-	attr(Kh,"unit") = "mol/kg"	
-	return(Kh)
+	K0= exp(nKhwe74);
+	attr(K0,"unit") = "mol/kg"	
+	return(K0)
 }

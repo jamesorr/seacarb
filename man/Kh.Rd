@@ -1,10 +1,10 @@
 \encoding{latin1}
-\name{Kh}
-\alias{Kh}
+\name{K0}
+\alias{K0}
 \title{Henry's constant mol/(kg/atm)}
 \description{Henry's constant mol/(kg/atm)}
 \usage{
-Kh(S = 35, T = 25, P = 0)
+K0(S = 35, T = 25, P = 0)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,7 +24,7 @@ Note that the arguments can be given as a unique number or as vectors. If the le
 } 
 
 \value{
-  \item{Kh}{Henry's constant mol/(kg/atm)}
+  \item{K0}{Henry's constant mol/(kg/atm)}
  
 }
 
@@ -36,6 +36,6 @@ Aurelien Proye and Jean-Pierre Gattuso \email{gattuso@obs-vlfr.fr}
 
 
 \examples{
-  Kh(S=35,T=25,P=0)
+  K0(S=35,T=25,P=0)
 }
 \keyword{utilities}
