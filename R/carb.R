@@ -77,7 +77,7 @@ K2 <- K2(S=S, T=T, P=P, pHscale=pHscale, k1k2=k1k2[i])
 Kf <- Kf(S=S, T=T, P=P, pHscale=pHscale, kf=kf[i])
 Ks <- Ks(S=S, T=T, P=P, ks=ks[i])
 Kw <- Kw(S=S, T=T, P=P, pHscale=pHscale)
-K0 <- K0(S=S, T=T, P=P)
+Kh <- Kh(S=S, T=T, P=P)
 Kb <- Kb(S=S, T=T, P=P, pHscale=pHscale)
 K1p <- K1p(S=S, T=T, P=P, pHscale=pHscale)
 K2p <- K2p(S=S, T=T, P=P, pHscale=pHscale)
@@ -122,7 +122,7 @@ rho <- rho(S=S,T=T,P=P)
 	PH <- var1
 	CO2 <- var2
 	h <- 10^(-PH)
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	HCO3 <- (K1*CO2)/h
 	CO3 <- (K2*HCO3)/h
 	DIC <- CO2 + HCO3 + CO3
@@ -133,9 +133,9 @@ rho <- rho(S=S,T=T,P=P)
 	{
 	CO2 <- var1
 	HCO3 <- var2
-	fCO2 <- CO2/K0
-	h <- K0*K1*fCO2/HCO3
-	CO3 <- K0*K1*K2*fCO2/(h*h)
+	fCO2 <- CO2/Kh
+	h <- Kh*K1*fCO2/HCO3
+	CO3 <- Kh*K1*K2*fCO2/(h*h)
 	DIC <- CO2 + HCO3 + CO3
 	PH <- -log10(h)
 	}
@@ -145,9 +145,9 @@ rho <- rho(S=S,T=T,P=P)
 	{
 	CO2 <- var1
 	CO3 <- var2
-	fCO2 <- CO2/K0
-	h <- sqrt((K0*K1*K2*fCO2)/CO3)
-	HCO3 <- (K0*K1*fCO2)/h
+	fCO2 <- CO2/Kh
+	h <- sqrt((Kh*K1*K2*fCO2)/CO3)
+	HCO3 <- (Kh*K1*fCO2)/h
 	DIC <- CO2 + HCO3 + CO3
 	PH <- -log10(h)
 	}
@@ -171,12 +171,12 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree and Htot
-  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
-	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
-  htot <- x}
-	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
-	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
+      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	   htot <- x / (1+ST/Ks) }
+	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
+         htot <- x}
+	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
+	   htot <- hfree / (1+ST/Ks)}
 	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
@@ -189,7 +189,7 @@ rho <- rho(S=S,T=T,P=P)
 	DIC <- CO2*(1+K1/h+K1*K2/(h*h))
 	HCO3 <- (DIC*K1*h)/(h*h+K1*h+K1*K2)
 	CO3 <- (DIC*K1*K2)/(h*h+K1*h+K1*K2)
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	PH <- -log10(h)
 	}
 
@@ -198,14 +198,14 @@ rho <- rho(S=S,T=T,P=P)
 	{
 	CO2 <- var1
 	DIC <- var2
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	a <- K1*K2*CO2
 	b <- K1*CO2
 	c <- CO2 - DIC
 	D <- b*b - 4*a*c
 	X <- (sqrt(D)-b)/(2*a)  # X = 1/h
 	h <- 2*K1*K2*CO2/(sqrt(K1*CO2*K1*CO2 - 4*K1*K2*CO2*(CO2 - DIC))-K1*CO2)
-	HCO3 <- K0*K1*fCO2/h
+	HCO3 <- Kh*K1*fCO2/h
 	CO3 <- DIC - CO2 - HCO3
 	PH <- -log10(h)
 	}
@@ -219,7 +219,7 @@ rho <- rho(S=S,T=T,P=P)
 	CO2 <- (HCO3*h)/K1
 	CO3 <- K2*HCO3/h
 	DIC <- CO2 + HCO3 + CO3
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	}
 
 	# ------------ case 7.) PH and CO3 given	
@@ -230,7 +230,7 @@ rho <- rho(S=S,T=T,P=P)
 	h <- 10^(-PH)
 	HCO3 <- CO3*h/K2
 	CO2 <- HCO3*h/K1
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	DIC <- CO2 + HCO3 + CO3
 	}
 
@@ -251,9 +251,16 @@ rho <- rho(S=S,T=T,P=P)
 	po4 <- Pt*K1p*K2p*K3p/(h^3+K1p*h^2+K1p*K2p*h+K1p*K2p*K3p)
 	siooh3 <- Sit/(1+h/Ksi)
 	## calculate Hfree anf Htot
+      if(pHscale=="F"){hfree <- h  ## if pHscale = free scale
+	   htot <- h / (1+ST/Ks) }
+	else if(pHscale=="T"){hfree <- h * (1+ST/Ks)
+         htot <- h}
+	else if(pHscale=="SWS"){hfree <- h * (1 + ST/Ks + fluo/Kf)
+	   htot <- hfree / (1+ST/Ks)}
+
   if(pHscale=="F"){hfree <- h  ## if pHscale = free scale
 	htot <- 10^(-pHconv(flag=2, pH=(-log10(h)), S=S, T=T, P=P))}   
-	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(h)), S=S, T=T, P=P))
+	if(pHscale=="T"){hfree <- x * (1+ST/Ks)
   htot <- h}
 	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(h)), S=S, T=T, P=P))
 	htot <- 10^(-pHconv(flag=1, pH=(-log10(h)), S=S, T=T, P=P))}
@@ -267,7 +274,7 @@ rho <- rho(S=S,T=T,P=P)
 	CO2 <- DIC/(1+K1/h+K1*K2/(h^2))
 	HCO3 <- CO2*K1/h
 	CO3 <- HCO3*K2/h
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	}
 	
 	# ------------ case 9.) PH and DIC given
@@ -279,7 +286,7 @@ rho <- rho(S=S,T=T,P=P)
 	HCO3 <- (DIC*K1*h)/(h*h+K1*h+K1*K2)
 	CO3 <- (DIC*K1*K2)/(h*h+K1*h+K1*K2)
 	CO2 <- h*HCO3/K1
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	}
 	
 	# ------------ case 10.) HCO3 and CO3 given	
@@ -290,7 +297,7 @@ rho <- rho(S=S,T=T,P=P)
 	h <- K2*HCO3/CO3
 	CO2 <- h*HCO3/K1
 	DIC <- CO2 + HCO3 + CO3
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	PH <- -log10(h)
 	}
 
@@ -313,13 +320,13 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree anf Htot
-  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
-	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
-  htot <- x}
-	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
-	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
-	
+      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	   htot <- x / (1+ST/Ks) }   
+	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
+         htot <- x}
+	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
+	   htot <- hfree / (1+ST/Ks)}
+
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
 	############
@@ -332,7 +339,7 @@ rho <- rho(S=S,T=T,P=P)
 	CO3 <- K2*HCO3/h
 	DIC <- CO2 + HCO3 + CO3
 	PH <- -log10(h)
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	}
 
 	# ------------ case 12.) HCO3 and DIC given
@@ -347,7 +354,7 @@ rho <- rho(S=S,T=T,P=P)
 	h <- (-b-sqrt(D))/(2*a)
 	CO2 <- h*HCO3/K1
 	CO3 <- K2*HCO3/h
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	PH <- -log10(h)
 	}
 
@@ -370,12 +377,12 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree anf Htot
-  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
-	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
-  htot <- x}
-	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
-	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
+      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	   htot <- x / (1+ST/Ks) }   
+	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
+         htot <- x}
+	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
+	   htot <- hfree / (1+ST/Ks)}
 	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
@@ -387,7 +394,7 @@ rho <- rho(S=S,T=T,P=P)
 	
  	HCO3 <- h*CO3/K2
 	CO2 <- h*HCO3/K1
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	DIC <- HCO3+CO2+CO3
 	PH <- -log10(h)
 	}
@@ -400,7 +407,7 @@ rho <- rho(S=S,T=T,P=P)
 	h <- (-K1*CO3 + sqrt(((K1*CO3)^2)-4*CO3*K1*K2*(CO3-DIC)))/(2*CO3)
 	HCO3 <- h*CO3/K2
 	CO2 <- h*HCO3/K1
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	PH <- -log10(h)
 	}
 	
@@ -422,12 +429,12 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree and Htot
-  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
-	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
-  htot <- x}
-	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
-	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
+      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	   htot <- x / (1+ST/Ks) }   
+	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
+         htot <- x}
+	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
+	   htot <- hfree / (1+ST/Ks)}
 	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
@@ -441,7 +448,7 @@ rho <- rho(S=S,T=T,P=P)
 	HCO3 <- (DIC*K1*h)/(h*h+K1*h+K1*K2)
 	CO3 <- (DIC*K1*K2)/(h*h+K1*h+K1*K2)
 	CO2 <- h*HCO3/K1
-	fCO2 <- CO2/K0
+	fCO2 <- CO2/Kh
 	PH <- -log10(h)
 	}
 
@@ -469,7 +476,7 @@ rho <- rho(S=S,T=T,P=P)
 	{
 	PH <- var2
 	h <- 10^(-PH)
-	CO2 <- K0*fCO2
+	CO2 <- Kh*fCO2
 	HCO3 <- K1*CO2/h
 	CO3 <- K2*HCO3/h
 	DIC <- CO2 + HCO3 + CO3
@@ -479,7 +486,7 @@ rho <- rho(S=S,T=T,P=P)
 	if (flag==22)
 	{
 	HCO3 <- var2
-	CO2 <- fCO2*K0
+	CO2 <- fCO2*Kh
 	h <- CO2*K1/HCO3
 	CO3 <- HCO3*K2/h
 	DIC <- CO2 + HCO3 + CO3
@@ -490,7 +497,7 @@ rho <- rho(S=S,T=T,P=P)
 	if (flag==23)
 	{
 	CO3 <- var2
-	h <- sqrt(K0*K1*K2*fCO2/CO3)
+	h <- sqrt(Kh*K1*K2*fCO2/CO3)
 	HCO3 <- h*CO3/K2
 	CO2 <- h*HCO3/K1
 	DIC <- CO2 + HCO3 + CO3
@@ -501,7 +508,7 @@ rho <- rho(S=S,T=T,P=P)
 	if (flag==24)
 	{
 	ALK <- var2
-	CO2 <- fCO2*K0
+	CO2 <- fCO2*Kh
 
 	fALK <- function(x)# K1=K1, K2=K2, CO2=CO2, bor=bor, Kb=Kb, Kw=Kw, Pt=Pt, K1p=K1p, K2p=K2p, K3p=K3p, Sit=Sit, Ksi=Ksi, NH3t=NH3t, KNH3=KNH3, H2St=H2St, KH2S=KH2S, ST=ST, Ks=Ks, fluo=fluo, Kf=Kf, ALK=ALK) {
 	# composants for ALK
@@ -516,13 +523,12 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree and Htot
-  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
-	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
-  htot <- x}
-	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
-	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
-	
+      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	   htot <- x / (1+ST/Ks) }   
+	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
+         htot <- x}
+	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
+	   htot <- hfree / (1+ST/Ks)}
 	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
@@ -542,9 +548,9 @@ rho <- rho(S=S,T=T,P=P)
 	if (flag==25)
 	{
 	DIC <- var2
-	CO2 <- K0*fCO2
+	CO2 <- Kh*fCO2
 	K <- K1/K2
-	HCO3 <- (1/2)*(-K*K0*fCO2+sqrt((K*K0*fCO2)^2 - 4*(K*K0*fCO2)*(K0*fCO2-DIC)))
+	HCO3 <- (1/2)*(-K*Kh*fCO2+sqrt((K*Kh*fCO2)^2 - 4*(K*Kh*fCO2)*(Kh*fCO2-DIC)))
 	CO3 <- DIC - CO2 - HCO3
 	h <- K1*CO2/HCO3
 	PH <- -log10(h)
@@ -563,13 +569,14 @@ rho <- rho(S=S,T=T,P=P)
 	hpo4 <- Pt*K1p*K2p*x/(x^3+K1p*x^2+K1p*K2p*x+K1p*K2p*K3p)
 	po4 <- Pt*K1p*K2p*K3p/(x^3+K1p*x^2+K1p*K2p*x+K1p*K2p*K3p)
 	siooh3 <- Sit/(1+x/Ksi)
-	if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}
-	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
-  htot <- x}
-	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
-  htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
-	# h is the concentration in H+ at the free scale
+
+      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	   htot <- x / (1+ST/Ks) }   
+	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
+         htot <- x}
+	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
+	   htot <- hfree / (1+ST/Ks)}
+
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
 	ALK <- hco3+2*co3+boh4+oh+hpo4+2*po4+siooh3-hfree-hso4-hf-h3po4
