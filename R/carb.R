@@ -9,7 +9,7 @@
 # Seacarb is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with seacarb; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-# JME optimized.
+#
 #
 #
 carb<-
@@ -171,12 +171,12 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree and Htot
-      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	   htot <- x / (1+ST/Ks) }
-	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
-         htot <- x}
-	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
-	   htot <- hfree / (1+ST/Ks)}
+  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
+	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
+  htot <- x}
+	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
+	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
 	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
@@ -251,16 +251,9 @@ rho <- rho(S=S,T=T,P=P)
 	po4 <- Pt*K1p*K2p*K3p/(h^3+K1p*h^2+K1p*K2p*h+K1p*K2p*K3p)
 	siooh3 <- Sit/(1+h/Ksi)
 	## calculate Hfree anf Htot
-      if(pHscale=="F"){hfree <- h  ## if pHscale = free scale
-	   htot <- h / (1+ST/Ks) }
-	else if(pHscale=="T"){hfree <- h * (1+ST/Ks)
-         htot <- h}
-	else if(pHscale=="SWS"){hfree <- h * (1 + ST/Ks + fluo/Kf)
-	   htot <- hfree / (1+ST/Ks)}
-
   if(pHscale=="F"){hfree <- h  ## if pHscale = free scale
 	htot <- 10^(-pHconv(flag=2, pH=(-log10(h)), S=S, T=T, P=P))}   
-	if(pHscale=="T"){hfree <- x * (1+ST/Ks)
+	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(h)), S=S, T=T, P=P))
   htot <- h}
 	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(h)), S=S, T=T, P=P))
 	htot <- 10^(-pHconv(flag=1, pH=(-log10(h)), S=S, T=T, P=P))}
@@ -320,13 +313,13 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree anf Htot
-      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	   htot <- x / (1+ST/Ks) }   
-	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
-         htot <- x}
-	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
-	   htot <- hfree / (1+ST/Ks)}
-
+  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
+	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
+  htot <- x}
+	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
+	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
+	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
 	############
@@ -377,12 +370,12 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree anf Htot
-      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	   htot <- x / (1+ST/Ks) }   
-	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
-         htot <- x}
-	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
-	   htot <- hfree / (1+ST/Ks)}
+  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
+	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
+  htot <- x}
+	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
+	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
 	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
@@ -429,12 +422,12 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree and Htot
-      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	   htot <- x / (1+ST/Ks) }   
-	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
-         htot <- x}
-	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
-	   htot <- hfree / (1+ST/Ks)}
+  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
+	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
+  htot <- x}
+	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
+	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
 	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
@@ -523,12 +516,13 @@ rho <- rho(S=S,T=T,P=P)
 	siooh3 <- Sit/(1+x/Ksi)
 	
 	## calculate Hfree and Htot
-      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	   htot <- x / (1+ST/Ks) }   
-	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
-         htot <- x}
-	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
-	   htot <- hfree / (1+ST/Ks)}
+  if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}   
+	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
+  htot <- x}
+	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
+	htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
+	
 	
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
@@ -569,14 +563,13 @@ rho <- rho(S=S,T=T,P=P)
 	hpo4 <- Pt*K1p*K2p*x/(x^3+K1p*x^2+K1p*K2p*x+K1p*K2p*K3p)
 	po4 <- Pt*K1p*K2p*K3p/(x^3+K1p*x^2+K1p*K2p*x+K1p*K2p*K3p)
 	siooh3 <- Sit/(1+x/Ksi)
-
-      if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
-	   htot <- x / (1+ST/Ks) }   
-	else if(pHscale=="T"){hfree <- x * (1+ST/Ks)
-         htot <- x}
-	else if(pHscale=="SWS"){hfree <- x * (1 + ST/Ks + fluo/Kf)
-	   htot <- hfree / (1+ST/Ks)}
-
+	if(pHscale=="F"){hfree <- x  ## if pHscale = free scale
+	htot <- 10^(-pHconv(flag=2, pH=(-log10(x)), S=S, T=T, P=P))}
+	if(pHscale=="T"){hfree <- 10^(-pHconv(flag=4, pH=(-log10(x)), S=S, T=T, P=P))
+  htot <- x}
+	if(pHscale=="SWS"){hfree <- 10^(-pHconv(flag=5, pH=(-log10(x)), S=S, T=T, P=P))
+  htot <- 10^(-pHconv(flag=1, pH=(-log10(x)), S=S, T=T, P=P))}
+	# h is the concentration in H+ at the free scale
 	hso4 <- ST/(1+Ks/hfree)
 	hf <- fluo/(1+Kf/htot)
 	ALK <- hco3+2*co3+boh4+oh+hpo4+2*po4+siooh3-hfree-hso4-hf-h3po4
