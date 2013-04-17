@@ -4,7 +4,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Parameters of the seawater carbonate system [EXPERIMENTAL VERSION]}
 \description{Returns parameters of the seawater carbonate system. [THIS IS AN EXPERIMENTAL VERSION, USE carb INSTEAD]}
-\usage{carb(flag, var1, var2, S=35, T=25, P=0, Pt=0, Sit=0,
+\usage{carbex(flag, var1, var2, S=35, T=25, P=0, Pt=0, Sit=0,
         k1k2="x", kf="x", ks="d", pHscale="T", b="l10")}
 %- maybe also 'usage' for other objects documented here.
 \arguments{

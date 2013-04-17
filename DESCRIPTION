@@ -1,7 +1,7 @@
 Package: seacarb
 Title: seawater carbonate chemistry with R
-Version: 2.4.9
-Date: 2013-03-11  
+Version: 2.4.10
+Date: 2013-04-17
 LazyData: yes
 Author: Heloise Lavigne, Jean-Pierre Gattuso
 Description: Calculates parameters of the seawater carbonate system and assists the design of ocean acidification perturbation experiments.
