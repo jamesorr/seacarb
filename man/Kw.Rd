@@ -4,7 +4,7 @@
 \title{Ion product of water (mol2/kg2)}
 \description{Ion product of water (mol2/kg2)}
 \usage{
-Kw(S = 35, T = 25, P = 0, pHscale = "T")
+Kw(S = 35, T = 25, P = 0, pHscale = "T", kSWS2scale=0)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -12,6 +12,8 @@ Kw(S = 35, T = 25, P = 0, pHscale = "T")
   \item{T}{Temperature in degrees Celsius, default is 25oC}
   \item{P}{Hydrostatic pressure in bar (surface = 0), default is 0}
   \item{pHscale}{choice of pH scale: "T" for using the total scale, "F" for using the free scale and "SWS" for using the seawater scale, default is total scale}
+  \item{kSWS2scale}{Conversion factor from SWS pH scale to chosen scale at chosen pressure;
+if needed and not given, it is computed; if given, computation speed is increased}
 }
 
 \details{

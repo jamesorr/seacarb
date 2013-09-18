@@ -30,12 +30,16 @@ Pcorrect(Kvalue, Ktype, T=25, S=35, P=0, pHscale="T")
   \item{S}{Salinity, default is 35}
   \item{P}{Hydrostatic pressure in bar (surface = 0), default is 0}
   \item{pHscale}{pHscale of the constant given in Kvalue}
-}
+  \item{kconv2ScaleP0}{Conversion factor from chosen pH scale to SWS (or free for Kf) scale at pressure zero;
+if not given, it is computed; if given, computation speed is increased}
+  \item{kconv2Scale}{Conversion factor from chosen pH scale to SWS (or free for Kf) scale at chosen pressure;
+if not given, it is computed; if given, computation speed is increased}
+}    
 
 \details{
 The pressure correction is applied on the seawater scale on K1, K2, K1p, K2p, K3p, Kb, Khs, Kn, Ksi and Kw. Hence the Kvalue is first converted on the seawater scale if needed. After pressure correction, the constant is converted back to the initial pH scale. 
-The pressure correction is applied on the free scale on Ks and Kf.
-There is no issue of the pH scale for Kspa and Kspc
+The pressure correction is applied on the free scale on Kf.
+There is no issue of the pH scale for Ks, Kspa and Kspc.
 } 
 
 \value{
