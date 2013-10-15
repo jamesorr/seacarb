@@ -168,9 +168,12 @@ nK <- max(length(S), length(T), length(P), length(k1k2), length(pHscale), length
     }
 
     # ------------------- Pression effect --------------------------------
-    if (any (P > 0))
+    i_press <- which (P > 0)
+    if (length(i_press) > 0)
     {
-        K2 <- Pcorrect(Kvalue=K2, Ktype="K2", S=S, T=T, P=P, pHscale=pHsc)
+        # Call Pcorrect() on SWS scale
+        K2[i_press] <- Pcorrect(Kvalue=K2[i_press], Ktype="K2", T=T[i_press], 
+            S=S[i_press], P=P[i_press], pHscale=pHsc[i_press], 1., 1.)
     }
 
     ## ------------------- Last conversion in the require pHscale ------------------

@@ -63,7 +63,7 @@ function(S=35,T=25,P=0,pHscale="T",kSWS2scale=0)
 
     # If needed, pressure correction
     if (any (P != 0))
-        Kw <- Pcorrect(Kvalue=Kw, Ktype="Kw", T=T, S=S, P=P, pHscale="SWS")
+        Kw <- Pcorrect(Kvalue=Kw, Ktype="Kw", T=T, S=S, P=P, pHscale="SWS", 1., 1.)
 
 	    
     ###----------------pH scale corrections

@@ -161,9 +161,12 @@ function(S=35,T=25,P=0,k1k2='x',pHscale="T",kSWS2scale=0,ktotal2SWS_P0=0)
     }
 
     # ------------------- Pression effect --------------------------------
-    if (any (P > 0))
+    i_press <- which (P > 0)
+    if (length(i_press) > 0)
     {
-        K1 <- Pcorrect(Kvalue=K1, Ktype="K1", T=T, S=S, P=P, pHscale=pHsc)
+        # Call Pcorrect() on SWS scale
+        K1[i_press] <- Pcorrect(Kvalue=K1[i_press], Ktype="K1", T=T[i_press], 
+            S=S[i_press], P=P[i_press], pHscale=pHsc[i_press], 1., 1.)
     }
 
 
