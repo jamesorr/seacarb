@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "~/Documents/R-forge/seacarb_folder/seacarb",
+        "query" : "Roy et al. (1993)",
+        "regex" : false
+    }
+}
