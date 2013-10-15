@@ -141,30 +141,31 @@ nK <- max(length(S), length(T), length(P), length(k1k2), length(pHscale), length
     {
         # Determine conversion factor from Total to SWS scal
 
-
         # if any just computed constant on Total scale
         is_T <- convert & (pHsc == "T")
-        ##------------- Convert from total to SWS scale
-        # if correction factor (from Total scale to seawater at P=0) not given
-        if (missing(ktotal2SWS_P0))
+        if (any(is_T))
         {
-            # Compute it
-            ktotal2SWS_P0 <- kconv(S=S[is_T], T=T[is_T], P=0)$ktotal2SWS
+            ##------------- Convert from total to SWS scale
+            # if correction factor (from Total scale to seawater at P=0) not given
+            if (missing(ktotal2SWS_P0))
+            {
+                # Compute it
+                ktotal2SWS_P0 <- kconv(S=S[is_T], T=T[is_T], P=0)$ktotal2SWS
+            }
+            else
+            {
+                # Check its length
+                if(length(ktotal2SWS_P0)!=nK) ktotal2SWS_P0 <- rep(ktotal2SWS_P0[1], nK)
+                # Filter
+                ktotal2SWS_P0 <- ktotal2SWS_P0[is_T]
+            }
+            K2[is_T] <- K2[is_T] * ktotal2SWS_P0
+            pHsc[is_T] <- "SWS"
+    
+            # Just computed constant is on Free scale only if required scale is free scale
+            # --> No need to convert from free to other scale
+            # --> No need to determine conversion factor from free to SWS scale
         }
-        else
-        {
-            # Check its length
-            if(length(ktotal2SWS_P0)!=nK) ktotal2SWS_P0 <- rep(ktotal2SWS_P0[1], nK)
-            # Filter
-            ktotal2SWS_P0 <- ktotal2SWS_P0[is_T]
-        }
-        K2[is_T] <- K2[is_T] * ktotal2SWS_P0
-        pHsc[is_T] <- "SWS"
-
-        # Just computed constant is on Free scale only if required scale is free scale
-        # --> No need to convert from free to other scale
-        # --> No need to determine conversion factor from free to SWS scale
-
     }
 
     # ------------------- Pression effect --------------------------------
@@ -192,8 +193,10 @@ nK <- max(length(S), length(T), length(P), length(k1k2), length(pHscale), length
         {
             # Compute it
             kSWS2scale <- rep(1.0,nK)
-            kSWS2scale[is_total] <- kconv(S=S[is_total], T=T[is_total], P=P[is_total])$kSWS2total
-            kSWS2scale[is_free]  <- kconv(S=S[is_free], T=T[is_free], P=P[is_free])$kSWS2free
+            if (any(is_total))
+                kSWS2scale[is_total] <- kconv(S=S[is_total], T=T[is_total], P=P[is_total])$kSWS2total
+            if (any(is_free))
+                kSWS2scale[is_free]  <- kconv(S=S[is_free], T=T[is_free], P=P[is_free])$kSWS2free
         }
         else
             # Check its length

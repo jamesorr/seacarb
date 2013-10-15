@@ -79,8 +79,12 @@ function(S=35,T=25,P=0,pHscale="T",kSWS2scale=0){
         {
             # Compute it
             kSWS2scale <- rep(1.0,nK)
-            kSWS2scale[is_total] <- kconv(S=S[is_total], T=T[is_total], P=P[is_total])$kSWS2total
-            kSWS2scale[is_free]  <- kconv(S=S[is_free], T=T[is_free], P=P[is_free])$kSWS2free
+            # Compute it
+            kSWS2scale <- rep(1.0,nK)
+            if (any(is_total))
+                kSWS2scale[is_total] <- kconv(S=S[is_total], T=T[is_total], P=P[is_total])$kSWS2total
+            if (any(is_free))
+                kSWS2scale[is_free]  <- kconv(S=S[is_free], T=T[is_free], P=P[is_free])$kSWS2free
         }
         else
             # Check its length
