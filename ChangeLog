@@ -1,4 +1,51 @@
 -----------------------------------
+version 3.0, 2013-10-15
+- Major update by Jean-Marie Epitalon, who has become an author of the package!
+- speed optimisation of the computation of dissociation constants using vectors 
+  and optional parameters
+
+- computation of dissociation constants:
+  - one or two pHScale conversion factor(s) are passed as optional
+  parameter(s) to speed-up computation. kSWS2scale to convert from SWS to 
+  the chosen scale at chosen pressure. ktotal2SWS_P0 to convert from total to 
+  SWS at an hydrostatic pressure of 0
+  - vector computations instead of iteration loops
+  - warning messages for out-of-validity-domain: only one message per
+  constant (instead of one per data entry)
+
+- Pressure correction function Pcorrect:
+  - two pHScale conversion factors passed as optional parameters to
+  speed-up computation. kconv2Scale to convert from the chosen scale to SWS 
+  at chosen pressure. kconv2ScaleP0 to convert from chosen scale to SWS at an 
+  hydrostatic pressure of 0
+  - vector computations instead of iteration loops
+
+- pH scale conversion kconv:
+  - two dissociation constants passed as optional parameters to speed-up
+  computation: Ks and Kff, which is Kf on the free pH scale
+
+- All these optional parameters not only allow faster calculations,
+they also allow more precise computation since the pHscale conversions
+are now based on the Ks and Kf values calculated as selected by the user
+(Dickson or Khoo for Ks, Perez & Fragra or Dickson & Goyet for Kf).
+
+- In a previous version, an attempt has been made to remember Kf formulation
+choice but it does not support the case of data set with different choice for
+each entry.
+
+- carb function: Vectors instead of loop iteration; flag 8: direct computation
+  - Instead of looping though data: processing is made in batches
+  - For each particular value f of flag, a subset of all data is created
+  based on flag=f, then this subset is processed in one shot
+  - When the Taylor approximation algorithm is used (call to uniroot()), 
+ a loop iteration over data is still used
+  - dissociation constants Kxy: for each Kxy, a vector of values for all
+  data is computed at the beginning in one shot; there is only one call to
+  the function Kxy()
+  - when flag=8, the approximation of DIC by the Taylor algorithm is replaced by
+  direct computation as DIC is linearly dependent on carbonate alkalinity.
+
+-----------------------------------
 version 2.4.10, 2013-04-17
 - Added function carbex to experiment potential future changes. DO NOT USE this function
 

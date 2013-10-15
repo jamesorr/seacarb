@@ -62,7 +62,7 @@ Roy R. N., Roy L. N., Vogel K. M., Porter-Moore C., Pearson T., Good C. E., Mill
 }
 
 \author{
-Heloise Lavigne, Aurelien Proye and Jean-Pierre Gattuso \email{gattuso@obs-vlfr.fr}
+Jean-Marie Epitalon and Heloise Lavigne, Aurelien Proye and Jean-Pierre Gattuso \email{gattuso@obs-vlfr.fr}
 }
 
 \seealso{

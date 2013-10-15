@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Jean-Pierre Gattuso and Heloise Lavigne and Aurelien Proye
+# Copyright (C) 2008 Jean-Pierre Gattuso and Jean-Marie Epitalon and Heloise Lavigne and Aurelien Proye
 # Revised by James Orr, 2012-01-17
 #
 # This file is part of seacarb.

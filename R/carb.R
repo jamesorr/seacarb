@@ -1,6 +1,5 @@
-# Copyright (C) 2008 Jean-Pierre Gattuso and Heloise Lavigne and Aurelien Proye
-# with a most valuable contribution of Bernard Gentili <gentili@obs-vlfr.fr>
-# and valuable suggestions from Jean-Marie Epitalon <epitalon@lsce.saclay.cea.fr>
+# Copyright (C) 2008 Jean-Marie Epitalon and Heloise Lavigne and Aurelien Proye and Jean-Pierre Gattuso  
+# with a most valuable contribution of Bernard Gentili
 #
 # This file is part of seacarb.
 #
@@ -30,12 +29,9 @@ function(flag, var1, var2, S=35, T=25, P=0, Pt=0, Sit=0, k1k2='x', kf='x', ks="d
     if(length(b)!=n){ b <- rep(b[1],n)}
 
         
-    #-------Constantes----------------
-    
-    tk = 273.15;           # [K] (for conversion [deg C] <-> [K])
-    
-    # JME: moved following code block here, after reading imput file
-    
+    #-------Constants----------------   
+    tk = 273.15;           # [K] (for conversion [deg C] <-> [K])  
+    # JME: moved following code block here, after reading imput file    
     TK = T + tk;           # TK [K]; T[C]
     
     #---- issues de equic----
@@ -62,6 +58,7 @@ function(flag, var1, var2, S=35, T=25, P=0, Pt=0, Sit=0, k1k2='x', kf='x', ks="d
     
     # Conversion factor from total to SWS pH scale at zero pressure
     ktotal2SWS_P0 <- kconv(S=S,T=T,P=0,kf=kf,Ks=Ks,Kff=Kff)$ktotal2SWS
+    
     # Conversion factor from SWS to chosen pH scale
     conv <- kconv(S=S,T=T,P=P,kf=kf,Ks=Ks,Kff=Kff)
     kSWS2chosen <- rep(1.,n)

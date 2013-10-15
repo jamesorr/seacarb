@@ -1,4 +1,3 @@
-# Copyright (C) 2003 Jean-Pierre Gattuso and Aurelien Proye
 # Revised by James Orr, 2012-01-17
 #
 # This file is part of seacarb.
