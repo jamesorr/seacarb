@@ -126,22 +126,26 @@ function(S=35,T=25,P=0,k1k2='x',pHscale="T",kSWS2scale=0,ktotal2SWS_P0=0)
     K1[is_m10_F] <- 10^(-pK1)  # K1 according to Millero et al. 2010 at Total scale
     pHsc[is_m10_F] <- "F"
 
-    ##----------------- Conversion to SWS scale
+    ##----------------- Conversion from total to SWS scale
     ##                  if pressure correction needed
     ##                  or pH scale conversion required anyway
     ##                     (in which case SWS may be an intermediate stage of conversion)
-    convert <- (P > 0) | (pHscale != pHsc)
+    convert <- (pHsc == "T") & ((P > 0) | (pHscale != pHsc))
     if (any (convert))
     {
+<<<<<<< HEAD
         # Determine conversion factor from Total to SWS scale
 
         # if any just computed constant on Total scale
         is_T <- convert & (pHsc == "T")
+=======
+>>>>>>> 11729f784fb1e986a5a52c91423be2104e339a98
         ##------------- Convert from total to SWS scale
         # if correction factor (from Total scale to seawater at P=0) not given
         if (missing(ktotal2SWS_P0))
         {
             # Compute it
+<<<<<<< HEAD
             ktotal2SWS_P0 <- kconv(S=S[is_T], T=T[is_T], P=0)$ktotal2SWS
         }
         else
@@ -158,6 +162,25 @@ function(S=35,T=25,P=0,k1k2='x',pHscale="T",kSWS2scale=0,ktotal2SWS_P0=0)
         # --> No need to convert from free to other scale
         # --> No need to determine conversion factor from free to SWS scale
 
+=======
+            kSWS2scale <- rep(1.0,nK)
+            ktotal2SWS_P0 <- kconv(S=S[convert], T=T[convert], P=0)$ktotal2SWS
+        }
+        else
+        {
+            # Check its length
+            if(length(ktotal2SWS_P0)!=nK) ktotal2SWS_P0 <- rep(ktotal2SWS_P0[1], nK)
+            # Filter
+            ktotal2SWS_P0 <- ktotal2SWS_P0[convert]
+        }
+        K1[convert] <- K1[convert] * ktotal2SWS_P0
+        pHsc[convert] <- "SWS"
+
+        # Just computed constant is on Free scale only if required scale is free scale
+        # and if no pressure correction needed  
+        # --> No need to convert from free to other scale
+        # --> No need to determine conversion factor from free to SWS scale
+>>>>>>> 11729f784fb1e986a5a52c91423be2104e339a98
     }
 
     # ------------------- Pression effect --------------------------------
