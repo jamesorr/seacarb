@@ -1,0 +1,16 @@
+{
+    "contents" : "Package: seacarb\nTitle: seawater carbonate chemistry with R\nVersion: 2.4.11\nDate: 2014-01-20\nLazyData: yes\nAuthor: Heloise Lavigne, Jean-Pierre Gattuso\nDescription: Calculates parameters of the seawater carbonate system and assists the design of ocean acidification perturbation experiments.\n        Code and/or corrections were contributed by Andreas Andersson,\n        Jean-Marie Epitalon, Bernard Gentili, Andreas Hofmann, Jim Orr,\n        Aurelien Proye and Karline Soetaert and James Rae\nMaintainer: Jean-Pierre Gattuso <gattuso@obs-vlfr.fr>\nURL: http://CRAN.R-project.org/package=seacarb\nLicense: GPL (>= 2)\nRepository: CRAN\nDate/Publication: 2011-05-25 13:35:50\nPackaged: 2013-02-21 18:03:39 UTC; gentili\n",
+    "created" : 1390233564717.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3144387047",
+    "id" : "9B92D3E8",
+    "lastKnownWriteTime" : 1390233591,
+    "path" : "~/Documents/R-forge/seacarb_folder/seacarb/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "dcf"
+}
