@@ -88,7 +88,8 @@ Kfpf <- Kfpf * factor
 #   pH-scale: 'free' (require to convert in total scale after pressure corrections 
 
 #lnKfdg = 1590.2/TK - 12.641 + 1.525*sqrt(ION);
-lnKfdg = 1590.2/TK - 12.641 + 1.525*sqrt(ION) + log(1-0.001005*S);
+#lnKfdg = 1590.2/TK - 12.641 + 1.525*sqrt(ION) + log(1-0.001005*S);
+lnKfdg = 1590.2/TK - 12.641 + 1.525*sqrt(iom0) + log(1-0.001005*S);
 
 Kfdg <- exp(lnKfdg)
 
